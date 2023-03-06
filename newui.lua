@@ -1,6 +1,6 @@
 local TweenService = game:GetService("TweenService")
 local a = game:GetService("VirtualUser")
-local Loader = loadstring(game:HttpGet("https://raw.githubusercontent.com/HUNTScripting/scripts/main/loader.lua"))()
+local Loader = game:HttpGet("https://raw.githubusercontent.com/HUNTScripting/scripts/main/loader.lua")
 game:service("Players").LocalPlayer.Idled:connect(function()
 	a:CaptureController()
 	a:ClickButton2(Vector2.new())
@@ -746,10 +746,9 @@ UserInputService.InputChanged:Connect(function(input)
 		update(input)
 	end
 end)
+loadstring(Loader)()
 
-	Loader:Initialize(function()
 		ScreenGui.Enabled = true
-	end)
 	task.wait(0.1)
 	Library:Notify("Information", "Press Right Shift to hide/show the GUI")
 task.wait(0.5)
