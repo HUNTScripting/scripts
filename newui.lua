@@ -746,12 +746,11 @@ UserInputService.InputChanged:Connect(function(input)
 		update(input)
 	end
 end)
-task.spawn(function()
+
 	Loader:Initialize(function()
 		ScreenGui.Enabled = true
 	end)
 	task.wait(0.1)
 	Library:Notify("Information", "Press Right Shift to hide/show the GUI")
-end)
 task.wait(0.5)
 return Library
