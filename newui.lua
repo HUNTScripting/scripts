@@ -61,7 +61,6 @@ TabsFrame.HorizontalScrollBarInset = Enum.ScrollBarInset.Always
 TabsFrame.ScrollBarThickness = 4
 TabsFrame.VerticalScrollBarInset = Enum.ScrollBarInset.Always
 TabsFrame.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
-TabsFrame.AutomaticSize = Enum.AutomaticSize.Y
 local UICorner = Instance.new("UICorner")
 UICorner.Parent = TabsFrame
 local UIListLayout = Instance.new("UIListLayout")
