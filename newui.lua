@@ -1,6 +1,6 @@
 local TweenService = game:GetService("TweenService")
 local a = game:GetService("VirtualUser")
-local Loader = game:HttpGet("https://raw.githubusercontent.com/HUNTScripting/scripts/main/loader.lua")
+local Loader = game:HttpGet("https://raw.githubusercontent.com/HUNTScripting/scripts/main/loader.lua", true)
 game:service("Players").LocalPlayer.Idled:connect(function()
 	a:CaptureController()
 	a:ClickButton2(Vector2.new())
@@ -61,14 +61,14 @@ TabsFrame.HorizontalScrollBarInset = Enum.ScrollBarInset.Always
 TabsFrame.ScrollBarThickness = 4
 TabsFrame.VerticalScrollBarInset = Enum.ScrollBarInset.Always
 TabsFrame.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
+TabsFrame.AutomaticSize = Enum.AutomaticSize.Y
 local UICorner = Instance.new("UICorner")
 UICorner.Parent = TabsFrame
-local UIGridLayout = Instance.new("UIGridLayout")
-UIGridLayout.Parent = TabsFrame
-UIGridLayout.FillDirection = Enum.FillDirection.Vertical
-UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 0)
-UIGridLayout.CellSize = UDim2.new(0, 100, 0.99000001, 0)
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Parent = TabsFrame
+UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+UIListLayout.Padding = UDim.new(0,10)
 local Sections = Instance.new("Folder")
 Sections.Name = "Sections"
 Sections.Parent = Frame
@@ -96,25 +96,28 @@ function Library:AddSection(Name)
 	local TabButton = Instance.new("TextButton")
 	TabButton.Parent = TabsFrame
 	TabButton.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
-	TabButton.Size = UDim2.new(0, 200, 0, 50)
+	TabButton.Size = UDim2.new(0, 0, 0, 25)
 	TabButton.AutoButtonColor = false
 	TabButton.Font = Enum.Font.SourceSansBold
 	TabButton.Text = Name
 	TabButton.TextColor3 = Color3.fromRGB(155, 155, 155)
-	TabButton.TextSize = 20
+	TabButton.TextSize = 18
+	TabButton.AutomaticSize = Enum.AutomaticSize.X
 	SetCanvas(TabsFrame, true)
+	local UIPadding = Instance.new("UIPadding")
+	UIPadding.Parent = TabButton
+	UIPadding.PaddingBottom = UDim.new(0, 2)
+	UIPadding.PaddingLeft = UDim.new(0, 10)
+	UIPadding.PaddingRight = UDim.new(0, 10)
+	UIPadding.PaddingTop = UDim.new(0, 2)
+	local UIStroke = Instance.new("UIStroke")
+	UIStroke.Parent = TabButton
+	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	UIStroke.Thickness = 2
+	UIStroke.Color = Color3.fromRGB(155, 155, 155)
 	local UICorner_2 = Instance.new("UICorner")
 	UICorner_2.Parent = TabButton
-	local UnderLine = Instance.new("Frame")
-	UnderLine.Name = "UnderLine"
-	UnderLine.Parent = TabButton
-	UnderLine.AnchorPoint = Vector2.new(0, 1)
-	UnderLine.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
-	UnderLine.BorderSizePixel = 0
-	UnderLine.Position = UDim2.new(0, 0, 0.99000001, 0)
-	UnderLine.Size = UDim2.new(1, 0, 0, 5)
-	local UIGradient_2 = Instance.new("UIGradient")
-	UIGradient_2.Parent = UnderLine
+	UICorner_2.CornerRadius = UDim.new(1,0)
 	local Section = Instance.new("ScrollingFrame")
 	Section.Name = "Section"
 	Section.Visible = false
@@ -139,8 +142,8 @@ function Library:AddSection(Name)
 	local function Focus()
 		for i, v in pairs(TabsFrame:GetChildren()) do
 			if v:IsA("TextButton") then
-				v.UnderLine.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 				v.TextColor3 = Color3.fromRGB(155, 155, 155)
+				v.UIStroke.Color = Color3.fromRGB(155, 155, 155)
 			end
 		end
 		for i, v in pairs(Sections:GetChildren()) do
@@ -150,7 +153,7 @@ function Library:AddSection(Name)
 		end
 		Section.Visible = true
 		TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-		TabButton.UnderLine.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		UIStroke.Color = Color3.fromRGB(255,255,255)
 	end
 	TabButton.Activated:Connect(Focus)
 	if not First then
@@ -583,8 +586,10 @@ function Library:AddSection(Name)
 		TextLabel.Font = Enum.Font.SourceSansBold
 		TextLabel.Text = Title
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.TextTransparency = 0.4
 		TextLabel.TextSize = 18.000
 		TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 		TextLabel.ZIndex = 1
 		local UIPadding = Instance.new("UIPadding")
 		UIPadding.Parent = TextLabel
