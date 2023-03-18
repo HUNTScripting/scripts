@@ -43,7 +43,7 @@ GUITitle.Position = UDim2.new(0, 0, -0.0113636367, 0)
 GUITitle.Size = UDim2.new(0, 440, 0, 20)
 GUITitle.Font = Enum.Font.SourceSansBold
 GUITitle.Text = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
-	.. ". Welcome to Dacia "
+	.. ". Welcome to Dacia, "
 	.. game.Players.LocalPlayer.Name
 	.. "."
 GUITitle.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -61,8 +61,11 @@ TabsFrame.HorizontalScrollBarInset = Enum.ScrollBarInset.Always
 TabsFrame.ScrollBarThickness = 4
 TabsFrame.VerticalScrollBarInset = Enum.ScrollBarInset.Always
 TabsFrame.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
-local UICorner = Instance.new("UICorner")
-UICorner.Parent = TabsFrame
+TabsFrame.AutomaticCanvasSize = Enum.AutomaticSize.X
+local UIPadding_Tabs = Instance.new("UIPadding")
+UIPadding_Tabs.Parent = TabsFrame
+UIPadding_Tabs.PaddingLeft = UDim.new(0, 5)
+UIPadding_Tabs.PaddingRight = UDim.new(0, 5)
 local UIListLayout = Instance.new("UIListLayout")
 UIListLayout.Parent = TabsFrame
 UIListLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -102,7 +105,6 @@ function Library:AddSection(Name)
 	TabButton.TextColor3 = Color3.fromRGB(155, 155, 155)
 	TabButton.TextSize = 18
 	TabButton.AutomaticSize = Enum.AutomaticSize.X
-	SetCanvas(TabsFrame, true)
 	local UIPadding = Instance.new("UIPadding")
 	UIPadding.Parent = TabButton
 	UIPadding.PaddingBottom = UDim.new(0, 2)
@@ -750,10 +752,10 @@ UserInputService.InputChanged:Connect(function(input)
 		update(input)
 	end
 end)
-loadstring(Loader)()
-
-		ScreenGui.Enabled = true
+if loadstring(Loader)() then
+	ScreenGui.Enabled = true
 	task.wait(0.1)
 	Library:Notify("Information", "Press Right Shift to hide/show the GUI")
-task.wait(0.5)
-return Library
+	task.wait(0.5)
+	return Library
+end
