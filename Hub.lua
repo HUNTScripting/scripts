@@ -1,8 +1,11 @@
 local GameId = tostring(game.GameId)
 local MainLink = "https://raw.githubusercontent.com/HUNTScripting/scripts/main/"
+local function setlink(link) MainLink = MainLink..link end
 if GameId == '3258302407' then
-    MainLink = MainLink.."RebirthChampsX.lua"
+    setlink("RebirthChampsX.lua")
 elseif GameId == '3965173814' then
-    MainLink = MainLink.."SwordFighters.lua"
+    setlink("SwordFighters.lua")
+elseif GameId == '4158951932' then
+    setlink("BubbleGumClicker.lua")
 end
 loadstring(game:HttpGet(MainLink , true))()
