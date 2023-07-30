@@ -107,3 +107,5 @@ end)
 Main:AddButton("Destroy the gui", function()
 	Library:Destroy()
 end)
+
+Main:AddLabel("Version 1.00")
