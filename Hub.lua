@@ -9,5 +9,7 @@ elseif GameId == '4158951932' then
     setlink("BubbleGumClicker.lua")
 elseif GameId == '4326974283' then
     setlink("sling.lua")
+elseif GameId == '4086767422' then
+    setlink("popit.lua")
 end
 loadstring(game:HttpGet(MainLink , true))()
