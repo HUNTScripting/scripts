@@ -48,6 +48,7 @@ local pickUpOrbRemote = ReplicatedStorage["SSG Framework"].Shared.Network.orbs
 local function getOrbs()
     for i,v in pairs(orbs:GetChildren()) do
         pickUpOrbRemote:FireServer(v.Name)
+        task.wait(0.1)
     end
 end
 Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
@@ -67,8 +68,6 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
                     if doBreak then
                         break
                     end
-                    
-					task.wait(0.1)
 				end
                 getOrbs()
 			end
