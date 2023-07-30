@@ -79,14 +79,14 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 end)
 local isAutoCollectOn;
 local Delay = 5;
-Main:AddToggle("Auto Collect Drops", "Automatically Collects Drops After Balloon is Broken", function(yeet)
+Main:AddToggle("Auto Collect Drops", "Automatically collects drop after a few seconds, the delay can be modified below", function(yeet)
 	isAutoCollectOn = yeet
 	while isAutoCollectOn do
         getOrbs()
         task.wait(Delay);
     end
 end)
-Main:AddTextbox("Auto Equip Delay: ", tostring(Delay) .. " Seconds", function(value)
+Main:AddTextbox("Auto Collect Delay: ", tostring(Delay) .. " Seconds", function(value)
 	Delay = tonumber(value) or 5
 end)
 local isAutoEquipPetsOn;
@@ -108,4 +108,4 @@ Main:AddButton("Destroy the gui", function()
 	Library:Destroy()
 end)
 
-Main:AddLabel("Version 1.00")
+Main:AddLabel("Version 1.01")
