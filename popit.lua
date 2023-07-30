@@ -57,11 +57,17 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 			local Area = Ballon:GetAttribute("Area")
 			if Area == SelectedArea then
 				while Ballon:GetAttribute("HP") > 0 and isAutoPopOn do
+                    local doBreak = false
                     CheckIfPetsTarget(function(petName)
                         pcall(function()
-					        popRemote:InvokeServer(SelectedArea, petName, Ballon.Name, true, Ballon.PrimaryPart.Position)
+					        local response = popRemote:InvokeServer(SelectedArea, petName, Ballon.Name, true, Ballon.PrimaryPart.Position)
+                            doBreak = not response
                         end)
                     end)
+                    if doBreak then
+                        break
+                    end
+                    
 					task.wait(0.1)
 				end
                 getOrbs()
