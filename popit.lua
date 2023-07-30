@@ -49,6 +49,7 @@ local function getOrbs()
     for i,v in pairs(orbs:GetChildren()) do
         pickUpOrbRemote:FireServer(v.Name)
         task.wait(0.1)
+        v:Destroy()
     end
 end
 Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
@@ -70,12 +71,23 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
                     end
                     task.wait()
 				end
-                getOrbs()
 			end
             task.wait()
 		end
 		task.wait(0.1)
 	end
+end)
+local isAutoCollectOn;
+local Delay = 5;
+Main:AddToggle("Auto Collect Drops", "Automatically Collects Drops After Balloon is Broken", function(yeet)
+	isAutoCollectOn = yeet
+	while isAutoCollectOn do
+        getOrbs()
+        task.wait(Delay);
+    end
+end)
+Main:AddTextbox("Auto Equip Delay: ", tostring(Delay) .. " Seconds", function(value)
+	Delay = tonumber(value) or 5
 end)
 local isAutoEquipPetsOn;
 local autoEquipRemote = ReplicatedStorage["SSG Framework"].Shared.Network["equip best pets"]
