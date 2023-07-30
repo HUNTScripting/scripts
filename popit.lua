@@ -34,6 +34,7 @@ local function CheckIfPetsTarget(action)
         local hasTarget = workspacePet:GetAttribute("target") == "player"
         if hasTarget then 
             action(v)
+            task.wait(0.1)
         end
     end
 end
@@ -42,6 +43,13 @@ Main:AddDropdown("Select your Area: ", Areas, function(value)
 end)
 local isAutoPopOn
 local popRemote = ReplicatedStorage["SSG Framework"].Shared.Network["attack drop"]
+local orbs = workspace.Orbs
+local pickUpOrbRemote = ReplicatedStorage["SSG Framework"].Shared.Network.orbs
+local function getOrbs()
+    for i,v in pairs(orbs:GetChildren()) do
+        pickUpOrbRemote:FireServer(v.Name)
+    end
+end
 Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 	isAutoPopOn = yeet
 	while isAutoPopOn do
@@ -50,11 +58,15 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 			if Area == SelectedArea then
 				while Ballon:GetAttribute("HP") > 0 and isAutoPopOn do
                     CheckIfPetsTarget(function(petName)
-					    popRemote:InvokeServer(SelectedArea, petName, Ballon.Name, true, Vector3.new(472, 26, -425))
+                        pcall(function()
+					        popRemote:InvokeServer(SelectedArea, petName, Ballon.Name, true, Ballon.PrimaryPart.Position)
+                        end)
                     end)
 					task.wait(0.1)
 				end
+                getOrbs()
 			end
+            task.wait(0.1)
 		end
 		task.wait(0.1)
 	end
