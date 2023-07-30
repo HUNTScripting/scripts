@@ -34,7 +34,7 @@ local function CheckIfPetsTarget(action)
         local hasTarget = workspacePet:GetAttribute("target") == "player"
         if hasTarget then 
             action(v)
-            task.wait(0.1)
+            task.wait(0.05)
         end
     end
 end
@@ -68,10 +68,11 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
                     if doBreak then
                         break
                     end
+                    task.wait()
 				end
                 getOrbs()
 			end
-            task.wait(0.1)
+            task.wait()
 		end
 		task.wait(0.1)
 	end
