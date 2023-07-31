@@ -25,8 +25,9 @@ local function GetPlayerPets()
 	end
 	return pets
 end
-local function CheckIfPetsTarget(action)
+local function GetAvailablePets()
     local pets = GetPlayerPets()
+    local retPets = {}
     for i,v in pairs(pets) do
         local workspacePet = workspace.Pets:FindFirstChild(v)
         if not workspacePet then
@@ -34,10 +35,11 @@ local function CheckIfPetsTarget(action)
         end
         local hasTarget = workspacePet:GetAttribute("target") == "player"
         if hasTarget then 
-            action(v)
+            table.insert(retPets, v)
             task.wait(0.05)
         end
     end
+    return retPets
 end
 Main:AddDropdown("Select your Area: ", Areas, function(value)
 	SelectedArea = value
@@ -78,13 +80,9 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 			if Area == SelectedArea then
 				while Ballon:GetAttribute("HP") > 0 and isAutoPopOn do
                     local doBreak = false
-                    CheckIfPetsTarget(function(petName)
-                        pcall(function()
-					        local response = popRemote:InvokeServer(SelectedArea, petName, Ballon.Name, true, Ballon.PrimaryPart.Position)
-                            doBreak = not response
-                        end)
-                    end)
-                    if doBreak then
+                    local availablePets = GetAvailablePets()
+					local response = popRemote:InvokeServer(SelectedArea, availablePets, Ballon.Name, true, {Ballon.PrimaryPart.Position, Ballon.PrimaryPart.Position, Ballon.PrimaryPart.Position, Ballon.PrimaryPart.Position})
+                    if not response then
                         break
                     end
                     task.wait()
@@ -126,4 +124,4 @@ Main:AddButton("Destroy the gui", function()
 	Library:Destroy()
 end)
 
-Main:AddLabel("Version 1.02 - Added Dungeon")
+Main:AddLabel("Version 1.021 - Added Dungeon & Fixed Balloon Attack")
