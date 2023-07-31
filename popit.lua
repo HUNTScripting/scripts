@@ -71,8 +71,6 @@ local function GetDungeonBaloons()
     end)
     return DungeonBalloons
 end
-local newVector = Vector3.new()
-local vectorTable = {newVector, newVector, newVector, newVector}
 Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 	isAutoPopOn = yeet
 	while isAutoPopOn do
@@ -87,7 +85,11 @@ Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 			if Area == SelectedArea then
 				while Ballon:GetAttribute("HP") > 0 and isAutoPopOn do
                     local availablePets = GetAvailablePets()
-					local response = popRemote:InvokeServer(SelectedArea, availablePets, Ballon.Name, true, {BallonPos, BallonPos, BallonPos, BallonPos})
+                    local posS = {}
+                    for _,__ in pairs(availablePets) do
+                        table.insert(posS, BallonPos)
+                    end
+					local response = popRemote:InvokeServer(SelectedArea, availablePets, Ballon.Name, true, posS)
                     if not response then
                         break
                     end
@@ -130,4 +132,4 @@ Main:AddButton("Destroy the gui", function()
 	Library:Destroy()
 end)
 
-Main:AddLabel("Version 1.022 - Fixed auto farm delay")
+Main:AddLabel("Version 1.023 - Fixed the server error for pets position")
