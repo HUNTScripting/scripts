@@ -14,6 +14,7 @@ for i = 1, math.floor(#Areas/2) do
     local j = #Areas - i + 1
      Areas[i], Areas[j] = Areas[j], Areas[i]
  end
+ table.insert(Areas, "Dungeon")
 local SelectedArea = nil
 local function GetPlayerPets()
 	local pets = {}
@@ -52,10 +53,27 @@ local function getOrbs()
         v:Destroy()
     end
 end
+local function GetDungeonBaloons()
+    if SelectedArea ~= "Dungeon" then
+        return nil;
+    end
+    local DungeonBalloons = {}
+    for _, Ballon in pairs(workspace.Drops:GetChildren()) do
+        local Area = Ballon:GetAttribute("Area")
+        if Area == "Dungeon" then
+            table.insert(DungeonBalloons, Ballon)
+        end
+    end
+    table.sort(DungeonBalloons, function(a, b)
+        return a:GetAttribute("MaxHP") > b:GetAttribute("MaxHP")
+    end)
+    return DungeonBalloons
+end
 Main:AddToggle("AutoFarm", "AutoFarm selected areas ", function(yeet)
 	isAutoPopOn = yeet
 	while isAutoPopOn do
-		for _, Ballon in pairs(workspace.Drops:GetChildren()) do
+        local BalloonList = GetDungeonBaloons();
+		for _, Ballon in pairs(BalloonList or workspace.Drops:GetChildren()) do
 			local Area = Ballon:GetAttribute("Area")
 			if Area == SelectedArea then
 				while Ballon:GetAttribute("HP") > 0 and isAutoPopOn do
@@ -108,4 +126,4 @@ Main:AddButton("Destroy the gui", function()
 	Library:Destroy()
 end)
 
-Main:AddLabel("Version 1.01")
+Main:AddLabel("Version 1.02 - Added Dungeon")
