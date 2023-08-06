@@ -291,7 +291,7 @@ function Library:AddSection(Name)
 			ToggleT:Toggle()
 		end)
 		if DefaultValue == true then
-			ToggleSwitch(true)
+			ToggleT:Toggle(true);
 		end
 		SetCanvas(Section)
 		return ToggleT
