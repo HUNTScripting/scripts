@@ -290,6 +290,7 @@ function Library:AddSection(Name)
 		Circle.Activated:Connect(function()
 			ToggleT:Toggle()
 		end)
+		print(DefaultValue)
 		if DefaultValue == true then
 			ToggleT.Toggled = true;
 			TweenButton = TweenService:Create(
@@ -298,6 +299,7 @@ function Library:AddSection(Name)
 				{ Position = UDim2.new(0.525, 0, 0.5, 0), BackgroundColor3 = Green }
 			)
 			TweenColor = TweenService:Create(Toggle, TweenInfo, { BackgroundColor3 = Green })
+			TweenButton:Play()
 			task.spawn(Callback, ToggleT.Toggled)
 		end
 		SetCanvas(Section)
