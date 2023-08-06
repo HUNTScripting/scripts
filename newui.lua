@@ -291,7 +291,14 @@ function Library:AddSection(Name)
 			ToggleT:Toggle()
 		end)
 		if DefaultValue == true then
-			ToggleT:Toggle(true);
+			ToggleT.Toggled = true;
+			TweenButton = TweenService:Create(
+				Circle,
+				TweenInfo,
+				{ Position = UDim2.new(0.525, 0, 0.5, 0), BackgroundColor3 = Green }
+			)
+			TweenColor = TweenService:Create(Toggle, TweenInfo, { BackgroundColor3 = Green })
+			task.spawn(Callback, ToggleT.Toggled)
 		end
 		SetCanvas(Section)
 		return ToggleT
